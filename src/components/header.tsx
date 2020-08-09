@@ -1,28 +1,54 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link, graphql, useStaticQuery } from 'gatsby';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
+import headerStyles from './header.module.scss';
+
 interface Props {}
 
 const Header: React.FC<Props> = () => {
+	const data = useStaticQuery(graphql`
+		query {
+			site {
+				siteMetadata {
+					title
+				}
+			}
+		}
+	`);
+
 	return (
 		<Navbar style={{ backgroundColor: 'lavender' }}>
 			<Container>
 				<Navbar.Brand>
-					<Link to="/">Home</Link>
+					<Link className={headerStyles.brand} to="/">
+						{data.site.siteMetadata.title}
+					</Link>
 				</Navbar.Brand>
 				<Nav className="mr-auto">
-					<Nav.Link>
-						<Link to="/blog">Blog</Link>
-					</Nav.Link>
-					<Nav.Link>
-						<Link to="/about">About</Link>
-					</Nav.Link>
-					<Nav.Link>
-						<Link to="/contact">Contact</Link>
-					</Nav.Link>
+					<Link
+						className={headerStyles.navItem}
+						activeClassName={headerStyles.activeNavItem}
+						to="/blog"
+					>
+						Blog
+					</Link>
+					<Link
+						className={headerStyles.navItem}
+						activeClassName={headerStyles.activeNavItem}
+						to="/about"
+					>
+						About
+					</Link>
+					<Link
+						className={headerStyles.navItem}
+						activeClassName={headerStyles.activeNavItem}
+						to="/contact"
+					>
+						Contact
+					</Link>
 				</Nav>
 				<Nav>
 					<FontAwesomeIcon icon={faShoppingBag} />
