@@ -6,9 +6,9 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
 import headerStyles from './header.module.scss';
 
-interface Props {}
+interface HeaderProps {}
 
-const Header: React.FC<Props> = () => {
+const Header: React.FC<HeaderProps> = () => {
 	const data = useStaticQuery(graphql`
 		query {
 			site {

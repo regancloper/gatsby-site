@@ -1,20 +1,20 @@
 import React from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import { Link, graphql, useStaticQuery } from 'gatsby';
 
 import Layout from '../components/layout';
+import blogStyles from './blog.module.scss';
 
 interface BlogPageProps {}
 
 const BlogPage: React.FC<BlogPageProps> = () => {
 	const blogData = useStaticQuery(graphql`
 		query {
-			allMarkdownRemark {
+			allContentfulBlogPost(sort: { fields: publishedDate, order: DESC }) {
 				edges {
 					node {
-						frontmatter {
-							title
-							date
-						}
+						title
+						slug
+						publishedDate(formatString: "MMMM Do, YYYY")
 					}
 				}
 			}
@@ -22,10 +22,15 @@ const BlogPage: React.FC<BlogPageProps> = () => {
 	`);
 
 	const renderBlogs = () => {
-		return blogData.allMarkdownRemark.edges.map((blog: any) => (
-			<li key={`${blog.node.frontmatter.title}-${blog.node.frontmatter.date}`}>
-				<h2>{blog.node.frontmatter.title}</h2>
-				<p>{blog.node.frontmatter.date}</p>
+		return blogData.allContentfulBlogPost.edges.map((blog: any) => (
+			<li
+				className={blogStyles.post}
+				key={`${blog.node.title}-${blog.node.publishedDate}`}
+			>
+				<Link to={`/blog/${blog.node.slug}`}>
+					<h2>{blog.node.title}</h2>
+					<p>{blog.node.publishedDate}</p>
+				</Link>
 			</li>
 		));
 	};
@@ -33,7 +38,7 @@ const BlogPage: React.FC<BlogPageProps> = () => {
 	return (
 		<Layout>
 			<h1>My Blog</h1>
-			<ol>{renderBlogs()}</ol>
+			<ol className={blogStyles.posts}>{renderBlogs()}</ol>
 		</Layout>
 	);
 };
