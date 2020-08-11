@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import Layout from '../components/layout';
+import Head from '../components/head';
 
 interface BlogProps {
 	data: {
@@ -39,6 +40,7 @@ const Blog: React.FC<BlogProps> = props => {
 
 	return (
 		<Layout>
+			<Head title={props.data.contentfulBlogPost.title} />
 			<h1>{props.data.contentfulBlogPost.title}</h1>
 			<p>{props.data.contentfulBlogPost.publishedDate}</p>
 			{documentToReactComponents(
