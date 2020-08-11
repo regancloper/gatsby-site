@@ -13,9 +13,6 @@ export const IndexPage: React.FC<IndexPageProps> = ({}) => {
 			<Head title="Home" />
 			<h1>Hello World!</h1>
 			<p>My name is Regan Loper</p>
-			<p>
-				Need a developer? <Link to="/contact">Contact Me!</Link>
-			</p>
 		</Layout>
 	);
 };
